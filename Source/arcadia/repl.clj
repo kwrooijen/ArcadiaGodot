@@ -3,6 +3,7 @@
   (:require 
    [arcadia.core]
    [arcadia.internal.config]
+   [arcadia.internal.variables]
    [clojure.main :as m]
    [clojure.string :as str]
    ;; [clojure.pprint :as pprint]
@@ -22,7 +23,7 @@
   "Log message to the Godot Editor console. Arguments are combined into a string."
   (GD/Print (into-array (map #(str % " ") args))))
 
-;; hack to have tooling eval on main thread (as instancing some node types on a thread is currently very slow) 
+;; hack to have tooling eval on main thread (as instancing some node types on a thread is currently very slow)
 
 (defn main-thread [f]
   (arcadia.core/timeout 0.0001 f))
@@ -67,9 +68,9 @@
 (defonce env-binding-symbols
   `[*ns*
     *math-context*
-    *print-meta* 
+    *print-meta*
     *print-length*
-    *print-level* 
+    *print-level*
     *data-readers*
     *default-data-reader-fn*
     *command-line-args*
@@ -242,7 +243,7 @@
         (.Enqueue work-queue [incoming-code socket sender])))))
 
 (defn start-server [^long port]
-  (try 
+  (try
     (if @server-running
       (log "REPL already running"))
     (when-not @server-running
@@ -254,7 +255,7 @@
         (.Start (Thread. (gen-delegate ThreadStart []
                                       (log "udp-repl: starting on port " port)
                                       (while @server-running
-                                        (try 
+                                        (try
                                           (listen-and-block socket)
                                           (main-thread (fn [] (eval-queue))) ;do we need a queue?
                                           (catch SocketException ex
@@ -290,7 +291,7 @@
 (defn start-socket-server
   ([] (start-socket-server nil))
   ([opts]
-   (try 
+   (try
      (s/start-server
        (merge server-defaults opts))
      (catch Exception e (GD/Print (str e))))))
@@ -308,6 +309,8 @@
 
 (defn launch [_]
   (load-all-clj-files)
+  (arcadia.internal.variables/generate-variables!)
+  (arcadia.internal.variables/connect-variables!)
   (when-let [port (:socket-repl arcadia.internal.config/config)]
     (log "socket-repl: starting on port " port)
     (start-socket-server {:port port}))
