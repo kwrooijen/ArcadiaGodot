@@ -223,6 +223,7 @@ namespace Arcadia
         {
             Boot.Initialize();
             target = this.GetParent();
+            Util.Invoke(RT.var("arcadia.internal.variables", "set-variable-state!"), target);
             AddEditorHook("_enter_tree", enter_tree_fn);
             AddEditorHook("_exit_tree", exit_tree_fn);
             AddEditorHook("_ready", ready_fn);
@@ -235,7 +236,6 @@ namespace Arcadia
             {
                 try
                 {
-                    target = (Godot.Node)Util.Invoke(RT.var("arcadia.internal.variables", "set-variable-state"), target);
                     item.Value.invoke(target, Keyword.intern(item.Key));
                 }
                 catch (Exception err)
@@ -251,7 +251,6 @@ namespace Arcadia
             {
                 try
                 {
-                    target = (Godot.Node)Util.Invoke(RT.var("arcadia.internal.variables", "set-variable-state"), target);
                     item.Value.invoke(target, Keyword.intern(item.Key));
                 }
                 catch (Exception err)
@@ -267,7 +266,6 @@ namespace Arcadia
             {
                 try
                 {
-                    target = (Godot.Node)Util.Invoke(RT.var("arcadia.internal.variables", "set-variable-state"), target);
                     item.Value.invoke(target, Keyword.intern(item.Key));
                 }
                 catch (Exception err)
@@ -284,7 +282,6 @@ namespace Arcadia
             {
                 try
                 {
-                    target = (Godot.Node)Util.Invoke(RT.var("arcadia.internal.variables", "set-variable-state"), target);
                     item.Value.invoke(target, Keyword.intern(item.Key));
                 }
                 catch (Exception err)
@@ -300,7 +297,6 @@ namespace Arcadia
             {
                 try
                 {
-                    target = (Godot.Node)Util.Invoke(RT.var("arcadia.internal.variables", "set-variable-state"), target);
                     item.Value.invoke(target, Keyword.intern(item.Key), delta);
                 }
                 catch (Exception err)
@@ -316,7 +312,6 @@ namespace Arcadia
             {
                 try
                 {
-                    target = (Godot.Node)Util.Invoke(RT.var("arcadia.internal.variables", "set-variable-state"), target);
                     item.Value.invoke(target, Keyword.intern(item.Key), delta);
                 }
                 catch (Exception err)
@@ -332,7 +327,6 @@ namespace Arcadia
             {
                 try
                 {
-                    target = (Godot.Node)Util.Invoke(RT.var("arcadia.internal.variables", "set-variable-state"), target);
                     item.Value.invoke(target, Keyword.intern(item.Key), e);
                 }
                 catch (Exception err)
@@ -348,7 +342,6 @@ namespace Arcadia
             {
                 try
                 {
-                    target = (Godot.Node)Util.Invoke(RT.var("arcadia.internal.variables", "set-variable-state"), target);
                     item.Value.invoke(target, Keyword.intern(item.Key), e);
                 }
                 catch (Exception err)
