@@ -36,6 +36,9 @@
 (defn main-thread-eval [s]
   (main-thread (fn [] (eval s))))
 
+(defn regular-eval [s]
+  (eval s))
+
 ;; ============================================================
 
 ;; utter kludge hack to help with poorly-understood bug where types

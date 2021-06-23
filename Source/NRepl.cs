@@ -244,7 +244,7 @@ namespace Arcadia
 				Var.pushThreadBindings(evalBindings);
 				try {
 					var form = readStringVar.invoke(readStringOptions, code);
-					var result = Arcadia.Util.Invoke(RT.var("arcadia.repl", "main-thread-eval"), form);
+					var result = Arcadia.Util.Invoke(RT.var("arcadia.repl", "regular-eval"), form);
 					var value = (string)prStrVar.invoke(result);
 
 					star3Var.set(star2Var.deref());
@@ -396,7 +396,9 @@ namespace Arcadia
 				case "eldoc":
 				case "info":
 
-                    String symbolStr = message["symbol"].ToString();
+                                    var symbol = message["symbol"];
+                                    if (symbol == null) { symbol = message["sym"]; }
+                    String symbolStr = symbol.ToString();
 
                     // Editors like Calva that support doc-on-hover sometimes will ask about empty strings or spaces
 					if (symbolStr == "" || symbolStr == null || symbolStr == " ") break;

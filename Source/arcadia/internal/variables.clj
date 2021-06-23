@@ -43,7 +43,7 @@
 (defn set-variables-edn! []
   (-> "res://variables.edn"
       (Godot.ProjectSettings/GlobalizePath)
-      (slurp)
+      (slurp :encoding "utf-8")
       (edn/read-string)
       (constantly)
       (->> (alter-var-root #'variable-state))))

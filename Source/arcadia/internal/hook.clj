@@ -62,7 +62,7 @@
     :hook/unhandled-input})
 
 (defn hooks-from-file [file]
-  (for [[_ v] (-> file slurp edn/read-string second ns-publics)
+  (for [[_ v] (-> file (slurp :encoding "utf-8") edn/read-string second ns-publics)
         [mk mv] (meta v)
         :when (hook-keys mk)]
     {:hook/key mk
